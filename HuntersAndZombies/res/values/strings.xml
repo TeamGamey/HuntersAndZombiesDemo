@@ -4,5 +4,13 @@
     <string name="app_name">HuntersAndZombiesDemo</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">HUNTERS\nAND\nZOMBIES</string>
+    <string name="title_activity_dashboard">Dashboard</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="shop_inventory">Shop!</string>
+    <string name="duel">Duel!</string>
+    <string name="score">Score!</string>
+    <string name="title_activity_score">Score</string>
+    <string name="title_activity_duel">Duel</string>
 
 </resources>
