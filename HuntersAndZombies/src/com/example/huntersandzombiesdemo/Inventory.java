@@ -3,6 +3,7 @@ package com.example.huntersandzombiesdemo;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -11,6 +12,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class Inventory extends Activity {
 	private TextView moneyLeft;
@@ -49,7 +51,7 @@ public class Inventory extends Activity {
 			money = extras.getInt(Dashboard.USER_MONEY);
 			inventory = extras.getStringArrayList(Dashboard.INVENTORY);
 			moneyLeft.setText(Integer.toString(money));
-			System.out.println(money);
+//			System.out.println(money);
 			
 		}
 		
@@ -64,24 +66,28 @@ public class Inventory extends Activity {
 	public void purchaseItem1(View view){
 		//Add item to inventory
 		//Subtract money flow
-//		if( money >= 100){
-//			money -= 100;
-//			inventory.add("Baseball Bat");
-//			moneyLeft.setText(Integer.toString(money));
+		if( money >= 100){
+			money -= 100;
+			inventory.add("Baseball Bat");
+			moneyLeft.setText(Integer.toString(money));
+			Context context = getApplicationContext();
+			CharSequence text = "Baseball bat has been purchased";
+			int duration = Toast.LENGTH_SHORT;
+			Toast.makeText(context, text, duration).show();
 			//Remove button
 			Button button = (Button) findViewById(R.id.button1);        
 		    button.setOnClickListener(new OnClickListener() {
 		        public void onClick(View view) {
-		        	if( money >= 100){
-		    			money -= 100;
-		    		inventory.add("Baseball Bat");
-		    		moneyLeft.setText(Integer.toString(money));
+//		        	if( money >= 100){
+//		    			money -= 100;
+//		    		inventory.add("Baseball Bat");
+//		    		moneyLeft.setText(Integer.toString(money));
 		            ViewGroup parentView = (ViewGroup) view.getParent();
 		            parentView.removeView(view);
-		        	}
+//		        	}
 		        }
 		    });
-//		}		
+		}		
 	}
 	public void purchaseItem2(View view){
 		//Add item to inventory
@@ -90,6 +96,10 @@ public class Inventory extends Activity {
 			money -= 200;
 			inventory.add("Golf Club");
 			moneyLeft.setText(Integer.toString(money));
+			Context context = getApplicationContext();
+			CharSequence text = "Golf club has been purchased";
+			int duration = Toast.LENGTH_SHORT;
+			Toast.makeText(context, text, duration).show();
 		//Remove button
 		Button button = (Button) findViewById(R.id.button2);        
 	    button.setOnClickListener(new OnClickListener() {
@@ -107,6 +117,10 @@ public class Inventory extends Activity {
 			money -= 300;
 			inventory.add("Mace");
 			moneyLeft.setText(Integer.toString(money));
+			Context context = getApplicationContext();
+			CharSequence text = "Mace has been purchased";
+			int duration = Toast.LENGTH_SHORT;
+			Toast.makeText(context, text, duration).show();
 			//Remove button
 		Button button = (Button) findViewById(R.id.button3);        
 	    button.setOnClickListener(new OnClickListener() {
@@ -124,6 +138,10 @@ public class Inventory extends Activity {
 			money -= 400;
 			inventory.add("Flail");
 			moneyLeft.setText(Integer.toString(money));
+			Context context = getApplicationContext();
+			CharSequence text = "Flail has been purchased";
+			int duration = Toast.LENGTH_SHORT;
+			Toast.makeText(context, text, duration).show();
 			//Remove button
 		Button button = (Button) findViewById(R.id.button4);        
 	    button.setOnClickListener(new OnClickListener() {
@@ -141,6 +159,10 @@ public class Inventory extends Activity {
 			money -= 500;
 			inventory.add("Crowbar");
 			moneyLeft.setText(Integer.toString(money));
+			Context context = getApplicationContext();
+			CharSequence text = "Crowbar has been purchased";
+			int duration = Toast.LENGTH_SHORT;
+			Toast.makeText(context, text, duration).show();
 		//Remove button
 		Button button = (Button) findViewById(R.id.button5);        
 	    button.setOnClickListener(new OnClickListener() {
