@@ -18,5 +18,19 @@
     <string name="woodenSword">Wooden Sword</string>
     <string name="weapons">Choose a weapon to initiate the duel</string>
     <string name="initiateDuel">Initiate Duel!</string>
+    <string name="title_activity_inventory">Inventory</string>
+    <string name="item0">Wooden Sword</string>
+    <string name="item1">Baseball Bat</string>
+	<string name="item2">Golf Club</string>
+	<string name="item3">Mace</string>
+    <string name="item4">Flail</string>    
+    <string name="item5">Crowbar</string>
+    <string name="price1">100</string>
+	<string name="price2">200</string>
+	<string name="price3">300</string>
+    <string name="price4">400</string>    
+    <string name="price5">500</string>
+    <string name="buy">Buy</string>
+    
 
 </resources>

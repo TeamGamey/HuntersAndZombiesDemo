@@ -1,7 +1,8 @@
 package com.example.huntersandzombiesdemo;
 
+import java.util.ArrayList;
+
 import android.content.Intent;
-import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
@@ -24,8 +25,9 @@ public class Dashboard extends FragmentActivity {
     public final static String USER_MONEY = "com.example.huntersandzombies.MONEY";
     public final static String INVENTORY = "com.example.huntersandzombies.INVENTORY";
     public static String username;
-    public static int money;
-    public static String[] inventory;
+    public static int money = 100;
+    
+    public static ArrayList<String> inventory;
 //    public final static 
     
     
@@ -35,11 +37,10 @@ public class Dashboard extends FragmentActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_dashboard);
         setUpMapIfNeeded();
-		
+		inventory = new ArrayList<String>();
 		scoreButton = (Button) findViewById(R.id.scoreButton);
 		duelButton = (Button) findViewById(R.id.duelButton);
 		inventoryButton = (Button) findViewById(R.id.inventoryButton);
-		
 		scoreButton.setOnClickListener(scoreHandler);
 		inventoryButton.setOnClickListener(inventoryHandler);
 		duelButton.setOnClickListener(duelHandler);
@@ -55,7 +56,7 @@ public class Dashboard extends FragmentActivity {
 			Bundle bundle = new Bundle();
 			bundle.putString(USER_NAME, username);
 			bundle.putInt(USER_MONEY, money);
-			bundle.putStringArray(INVENTORY, inventory);
+			//bundle.putStringArray(INVENTORY, inventory);
 			Intent intent = new Intent(Dashboard.this, Score.class);
 			intent.putExtras(bundle);
 //			startActivityForResult(intent, 1); //add request code for each
@@ -71,12 +72,12 @@ public class Dashboard extends FragmentActivity {
 		@Override
 		public void onClick(View v) {
 			// TODO Auto-generated method stub
-//			Intent intent = new Intent(this, ...intent..);
-//			startActivity(intent);
-			Bundle bundle = new Bundle();
-			bundle.putString(USER_NAME, username);
-			bundle.putInt(USER_MONEY, money);
-			bundle.putStringArray(INVENTORY, inventory);
+			Intent intent = new Intent(Dashboard.this, Inventory.class);
+			startActivity(intent);
+//			Bundle bundle = new Bundle();
+//			bundle.putString(USER_NAME, username);
+//			bundle.putInt(USER_MONEY, money);
+//			bundle.putStringArray(INVENTORY, inventory);
 			//do nothing for now until inventory class is created
 //			Intent intent = new Intent(Dashboard.this, Score.class);//fix to inventory view
 //			intent.putExtras(bundle);
@@ -95,7 +96,7 @@ public class Dashboard extends FragmentActivity {
 			Bundle bundle = new Bundle();
 			bundle.putString(USER_NAME, username);
 			bundle.putInt(USER_MONEY, money);
-			bundle.putStringArray(INVENTORY, inventory);
+//			bundle.putStringArray(INVENTORY, inventory);
 			Intent intent = new Intent(Dashboard.this, Duel.class);
 			intent.putExtras(bundle);
 			startActivity(intent);
@@ -150,6 +151,7 @@ public class Dashboard extends FragmentActivity {
      */
     private void setUpMapIfNeeded() {
         // Do a null check to confirm that we have not already instantiated the map.
+    	
         if (googleMap == null) {
             // Try to obtain the map from the SupportMapFragment.
             googleMap = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map))
@@ -168,6 +170,7 @@ public class Dashboard extends FragmentActivity {
      * This should only be called once and when we are sure that {@link #googleMap} is not null.
      */
     private void setUpMap() {
+    	
     	googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 //    	if (googleMap.isMyLocationEnabled()) {
 //    		Location x = googleMap.getMyLocation();
