@@ -19,6 +19,15 @@ public class Dashboard extends FragmentActivity {
 	private Button scoreButton;
 	private Button duelButton;
     private GoogleMap googleMap;
+    public final static String USER_NAME = "com.example.huntersandzombies.USERNAME";
+    public final static String USER_MONEY = "com.example.huntersandzombies.MONEY";
+    public final static String INVENTORY = "com.example.huntersandzombies.INVENTORY";
+    private String username;
+    private int money;
+    private String[] inventory;
+//    public final static 
+    
+    
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -29,12 +38,11 @@ public class Dashboard extends FragmentActivity {
 		scoreButton = (Button) findViewById(R.id.scoreButton);
 		duelButton = (Button) findViewById(R.id.duelButton);
 		inventoryButton = (Button) findViewById(R.id.inventoryButton);
-		//add event handlers to change view
 		
 		scoreButton.setOnClickListener(scoreHandler);
 		inventoryButton.setOnClickListener(inventoryHandler);
 		duelButton.setOnClickListener(duelHandler);
-//		scoreButton.setOnClickListener(this);
+
 	}
 	/*
 	 * on click listener for the scorebutton
@@ -43,8 +51,13 @@ public class Dashboard extends FragmentActivity {
 		@Override
 		public void onClick(View v) {
 			// TODO Auto-generated method stub
+			Bundle bundle = new Bundle();
+			bundle.putString(USER_NAME, username);
+			bundle.putInt(USER_MONEY, money);
+			bundle.putStringArray(INVENTORY, inventory);
 			Intent intent = new Intent(Dashboard.this, Score.class);
-			startActivity(intent);
+			intent.putExtras(bundle);
+			startActivityForResult(intent, 1); //add request code for each
 		}
 	};
 	
@@ -58,6 +71,14 @@ public class Dashboard extends FragmentActivity {
 			// TODO Auto-generated method stub
 //			Intent intent = new Intent(this, ...intent..);
 //			startActivity(intent);
+			Bundle bundle = new Bundle();
+			bundle.putString(USER_NAME, username);
+			bundle.putInt(USER_MONEY, money);
+			bundle.putStringArray(INVENTORY, inventory);
+			//do nothing for now until inventory class is created
+//			Intent intent = new Intent(Dashboard.this, Score.class);//fix to inventory view
+//			intent.putExtras(bundle);
+//			startActivityForResult(intent, 2);
 		}
 	};
 	
@@ -69,10 +90,32 @@ public class Dashboard extends FragmentActivity {
 		@Override
 		public void onClick(View v) {
 			// TODO Auto-generated method stub
+			Bundle bundle = new Bundle();
+			bundle.putString(USER_NAME, username);
+			bundle.putInt(USER_MONEY, money);
+			bundle.putStringArray(INVENTORY, inventory);
 			Intent intent = new Intent(Dashboard.this, Duel.class);
-			startActivity(intent);
+			intent.putExtras(bundle);
+			startActivityForResult(intent,3);
 		}
 	};
+	
+	/**
+	 * Basically need to store the data and do nothing more, so it can be passed to other screens
+	 */
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent intent){
+		super.onActivityResult(requestCode, resultCode, intent);
+        Bundle extras = intent.getExtras();
+		switch(requestCode){
+		case 1: //from score
+			break;
+		case 2: //from inventory
+			break;
+		case 3: //from duel
+			break;
+		}
+	}
 	
     @Override
     protected void onResume() {
