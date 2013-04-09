@@ -181,5 +181,4 @@ public class Dashboard extends FragmentActivity {
         	.position(new LatLng(42.36036686, -71.08679982))
         	.title("Sad!"));
     }
-
 }
