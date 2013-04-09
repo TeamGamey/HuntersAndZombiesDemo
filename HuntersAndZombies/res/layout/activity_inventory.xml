@@ -1,0 +1,138 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".Inventory" >
+    
+ 	<TextView
+ 	    android:layout_width="wrap_content"
+ 	    android:layout_height="wrap_content"
+ 	    android:id = "@+id/moneyLeft"
+    	android:text = "@string/price1"
+        android:textAppearance ="?android:attr/textAppearanceLarge" />
+    
+    <TableLayout
+        android:paddingTop="50dp"
+        android:id="@+id/tableLayout1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TableRow
+            android:id="@+id/tableRow0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width = "wrap_content"
+                android:layout_height = "wrap_content"
+                android:text = "@string/item0"
+                android:textAppearance ="?android:attr/textAppearanceLarge" />
+        </TableRow>
+        <TableRow
+            android:id="@+id/tableRow1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+            <TextView
+                android:layout_width = "wrap_content"
+                android:layout_height = "wrap_content"
+                android:text = "@string/item1"
+                android:textAppearance ="?android:attr/textAppearanceLarge" />
+            <TextView
+                android:text = "@string/price1"
+                android:textAppearance ="?android:attr/textAppearanceLarge" />
+            
+            <Button
+                android:id="@+id/button1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/buy" 
+                
+                android:onClick="purchaseItem1"/>
+            
+        </TableRow>
+        
+        <TableRow
+            android:id="@+id/tableRow2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+            <TextView
+                android:layout_width = "wrap_content"
+                android:layout_height = "wrap_content"
+                android:text = "@string/item2"
+                android:textAppearance ="?android:attr/textAppearanceLarge" />
+            <TextView
+                android:text = "@string/price2"
+                android:textAppearance ="?android:attr/textAppearanceLarge" />
+            
+            <Button
+                android:id="@+id/button2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/buy"
+                android:onClick="purchaseItem2"/>
+                
+        </TableRow>
+        <TableRow
+            android:id="@+id/tableRow3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+            <TextView
+                android:layout_width = "wrap_content"
+                android:layout_height = "wrap_content"
+                android:text = "@string/item3"
+                android:textAppearance ="?android:attr/textAppearanceLarge" />
+            <TextView
+                android:text = "@string/price3"
+                android:textAppearance ="?android:attr/textAppearanceLarge" />
+            <Button
+                android:id="@+id/button3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/buy"
+                android:onClick="purchaseItem3"/>                            
+        </TableRow>
+        <TableRow
+            android:id="@+id/tableRow4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+            <TextView
+                android:layout_width = "wrap_content"
+                android:layout_height = "wrap_content"
+                android:text = "@string/item4"
+                android:textAppearance ="?android:attr/textAppearanceLarge" />
+            <TextView
+                android:text = "@string/price4"
+                android:textAppearance ="?android:attr/textAppearanceLarge" />
+            <Button
+                android:id="@+id/button4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/buy"
+                android:onClick="purchaseItem4"/>                
+        </TableRow>
+        <TableRow
+            android:id="@+id/tableRow5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+            <TextView
+                android:layout_width = "wrap_content"
+                android:layout_height = "wrap_content"
+                android:text = "@string/item5"
+                android:textAppearance ="?android:attr/textAppearanceLarge" />
+            <TextView
+                android:text = "@string/price5"
+                android:textAppearance ="?android:attr/textAppearanceLarge" />
+            <Button
+                android:id="@+id/button5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/buy"
+                android:onClick="purchaseItem5"/>
+        </TableRow>
+        
+    </TableLayout>
+
+</RelativeLayout>

@@ -24,6 +24,7 @@ public class Dashboard extends FragmentActivity {
     public final static String USER_NAME = "com.example.huntersandzombies.USERNAME";
     public final static String USER_MONEY = "com.example.huntersandzombies.MONEY";
     public final static String INVENTORY = "com.example.huntersandzombies.INVENTORY";
+    public final static int INVENTORY_REQUEST = 1;
     public static String username;
     public static int money = 100;
     
@@ -73,15 +74,15 @@ public class Dashboard extends FragmentActivity {
 		public void onClick(View v) {
 			// TODO Auto-generated method stub
 			Intent intent = new Intent(Dashboard.this, Inventory.class);
-			startActivity(intent);
-//			Bundle bundle = new Bundle();
-//			bundle.putString(USER_NAME, username);
-//			bundle.putInt(USER_MONEY, money);
-//			bundle.putStringArray(INVENTORY, inventory);
+//			startActivity(intent);
+			Bundle bundle = new Bundle();
+			bundle.putString(USER_NAME, username);
+			bundle.putInt(USER_MONEY, money);
+			bundle.putStringArrayList(INVENTORY, inventory);
 			//do nothing for now until inventory class is created
 //			Intent intent = new Intent(Dashboard.this, Score.class);//fix to inventory view
 //			intent.putExtras(bundle);
-//			startActivityForResult(intent, 2);
+			startActivityForResult(intent, INVENTORY_REQUEST);
 		}
 	};
 	
