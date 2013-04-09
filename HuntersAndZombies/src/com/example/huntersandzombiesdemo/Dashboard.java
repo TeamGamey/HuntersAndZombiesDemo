@@ -2,6 +2,7 @@ package com.example.huntersandzombiesdemo;
 
 import java.util.ArrayList;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -40,12 +41,7 @@ public class Dashboard extends FragmentActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_dashboard);
 		Intent intent = getIntent();
-		if(!intent.hasExtra(USER_MONEY)){
-			money = 100; //default value
-		}
-		else{
-			money = intent.getIntExtra(USER_NAME, 100);
-		}
+		
         setUpMapIfNeeded();
 		inventory = new ArrayList<String>();
 		scoreButton = (Button) findViewById(R.id.scoreButton);
@@ -56,8 +52,23 @@ public class Dashboard extends FragmentActivity {
 		inventoryButton.setOnClickListener(inventoryHandler);
 		duelButton.setOnClickListener(duelHandler);
 		resetButton.setOnClickListener(resetHandler);
+		if(!intent.hasExtra(USER_MONEY)){
+			money = 100; //default value
+			showInstructions();
+		}
+		else{
+			money = intent.getIntExtra(USER_NAME, 100);
+		}
 		
 
+	}
+	
+	private void showInstructions(){
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+				Dashboard.this);
+		alertDialogBuilder.setTitle("Welcome to Hunters and Zombies!");
+		alertDialogBuilder.setMessage("Click on the duel button to show the zombies in your area, and click on the shop button to show your inventory of weapons!");
+		alertDialogBuilder.setNeutralButton("Close", null).show();
 	}
 	
 	View.OnClickListener resetHandler = new View.OnClickListener() {
@@ -70,7 +81,9 @@ public class Dashboard extends FragmentActivity {
 			Context context = getApplicationContext();
 			CharSequence text = "Application has been reset";
 			int duration = Toast.LENGTH_SHORT;
-			Toast.makeText(context, text, duration).show();
+//			Toast.makeText(context, text, duration).show();
+			showInstructions();
+			
 
 		}
 	};
