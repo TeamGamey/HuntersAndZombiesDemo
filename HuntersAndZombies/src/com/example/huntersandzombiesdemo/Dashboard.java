@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -20,16 +21,16 @@ public class Dashboard extends FragmentActivity {
 	private Button inventoryButton;
 	private Button scoreButton;
 	private Button duelButton;
+	private Button resetButton;
     private GoogleMap googleMap;
     public final static String USER_NAME = "com.example.huntersandzombies.USERNAME";
     public final static String USER_MONEY = "com.example.huntersandzombies.MONEY";
     public final static String INVENTORY = "com.example.huntersandzombies.INVENTORY";
     public final static int INVENTORY_REQUEST = 1;
     public static String username;
-    public static int money = 100;
-    
-    public static ArrayList<String> inventory;
-//    public final static 
+    public static int money;   
+    public static ArrayList<String> inventory = new ArrayList<String>();
+
     
     
 	
@@ -37,16 +38,36 @@ public class Dashboard extends FragmentActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_dashboard);
+		Intent intent = getIntent();
+		if(!intent.hasExtra(USER_MONEY)){
+			money = 100; //default value
+		}
+		else{
+			money = intent.getIntExtra(USER_NAME, 100);
+		}
         setUpMapIfNeeded();
 		inventory = new ArrayList<String>();
 		scoreButton = (Button) findViewById(R.id.scoreButton);
 		duelButton = (Button) findViewById(R.id.duelButton);
 		inventoryButton = (Button) findViewById(R.id.inventoryButton);
+		resetButton = (Button) findViewById(R.id.resetBtn);
 		scoreButton.setOnClickListener(scoreHandler);
 		inventoryButton.setOnClickListener(inventoryHandler);
 		duelButton.setOnClickListener(duelHandler);
+		resetButton.setOnClickListener(resetHandler);
+		
 
 	}
+	
+	View.OnClickListener resetHandler = new View.OnClickListener() {
+		
+		@Override
+		public void onClick(View v) {
+			// TODO Auto-generated method stub
+			money = 100;
+			inventory = new ArrayList<String>();
+		}
+	};
 	/*
 	 * on click listener for the scorebutton
 	 */
@@ -74,14 +95,11 @@ public class Dashboard extends FragmentActivity {
 		public void onClick(View v) {
 			// TODO Auto-generated method stub
 			Intent intent = new Intent(Dashboard.this, Inventory.class);
-//			startActivity(intent);
 			Bundle bundle = new Bundle();
 			bundle.putString(USER_NAME, username);
 			bundle.putInt(USER_MONEY, money);
 			bundle.putStringArrayList(INVENTORY, inventory);
-			//do nothing for now until inventory class is created
-//			Intent intent = new Intent(Dashboard.this, Score.class);//fix to inventory view
-//			intent.putExtras(bundle);
+			intent.putExtras(bundle);
 			startActivityForResult(intent, INVENTORY_REQUEST);
 		}
 	};
@@ -97,6 +115,7 @@ public class Dashboard extends FragmentActivity {
 			Bundle bundle = new Bundle();
 			bundle.putString(USER_NAME, username);
 			bundle.putInt(USER_MONEY, money);
+			bundle.putStringArrayList(INVENTORY, inventory);
 //			bundle.putStringArray(INVENTORY, inventory);
 			Intent intent = new Intent(Dashboard.this, Duel.class);
 			intent.putExtras(bundle);
@@ -112,11 +131,12 @@ public class Dashboard extends FragmentActivity {
 		super.onActivityResult(requestCode, resultCode, intent);
         Bundle extras = intent.getExtras();
 		switch(requestCode){
-		case 1: //from score
-			break;
-		case 2: //from inventory
-			break;
-		case 3: //from duel
+		case INVENTORY_REQUEST: 
+			if(extras!=null){
+				System.out.println("working");
+			money = extras.getInt(USER_MONEY);
+			inventory = extras.getStringArrayList(INVENTORY);
+			}
 			break;
 		}
 	}
@@ -125,6 +145,17 @@ public class Dashboard extends FragmentActivity {
     protected void onResume() {
         super.onResume();
         setUpMapIfNeeded();
+        
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+		if(!intent.hasExtra(USER_MONEY)){
+			money = 100; //default value
+		}
+		else{
+			
+			money = bundle.getInt(USER_MONEY);
+		}
+        
     }
 
 
@@ -171,7 +202,7 @@ public class Dashboard extends FragmentActivity {
      * This should only be called once and when we are sure that {@link #googleMap} is not null.
      */
     private void setUpMap() {
-    	
+//    	money = 100;
     	googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 //    	if (googleMap.isMyLocationEnabled()) {
 //    		Location x = googleMap.getMyLocation();

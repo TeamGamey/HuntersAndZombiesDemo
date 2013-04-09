@@ -31,6 +31,7 @@
     <string name="price4">400</string>    
     <string name="price5">500</string>
     <string name="buy">Buy</string>
-    
+    <string name="inventoryToDashbtn">Return to Dashboard</string>
+    <string name="resetLabel">Reset</string>
 
 </resources>

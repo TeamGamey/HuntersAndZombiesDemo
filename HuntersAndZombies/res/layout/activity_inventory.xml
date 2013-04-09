@@ -12,7 +12,7 @@
  	    android:layout_width="wrap_content"
  	    android:layout_height="wrap_content"
  	    android:id = "@+id/moneyLeft"
-    	android:text = "@string/price1"
+    	android:text = ""
         android:textAppearance ="?android:attr/textAppearanceLarge" />
     
     <TableLayout
@@ -134,5 +134,13 @@
         </TableRow>
         
     </TableLayout>
+
+    <Button
+        android:id="@+id/inventoryToDashbtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:text="@string/inventoryToDashbtn" />
 
 </RelativeLayout>

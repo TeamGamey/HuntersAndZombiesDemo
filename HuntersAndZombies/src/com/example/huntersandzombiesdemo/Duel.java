@@ -1,5 +1,6 @@
 package com.example.huntersandzombiesdemo;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import android.app.Activity;
@@ -18,9 +19,9 @@ public class Duel extends Activity {
 	private HashMap<Integer, String> users;
 	private TableLayout mTlayout;
 	public static String DUEL_USERNAME = "com.example.huntersandzombies.DUEL_USERNAME";
-//	private String username;
-//	private String[] inventory;
-//	private int money;
+	private String username;
+	private ArrayList<String> inventory;
+	private int money;
 	//map user to distance away (in meters or something
 	
 
@@ -35,12 +36,12 @@ public class Duel extends Activity {
 		users.put(3599, "Monster1234524");
 		setupUsers();
 		
-//		Bundle extras = getIntent().getExtras();
-//		if (extras != null) {
-//            username = extras.getString(Dashboard.USER_NAME);
-//            inventory = extras.getStringArray(Dashboard.INVENTORY);
-//            money = extras.getInt(Dashboard.USER_MONEY);
-//        }
+		Bundle extras = getIntent().getExtras();
+		if (extras != null) {
+            username = extras.getString(Dashboard.USER_NAME);
+            inventory = extras.getStringArrayList(Dashboard.INVENTORY);
+            money = extras.getInt(Dashboard.USER_MONEY);
+        }
 	}
 	
 	private void setupUsers(){
@@ -58,8 +59,12 @@ public class Duel extends Activity {
 			btn.setOnClickListener(new OnClickListener(){
 				@Override
 			      public void onClick(View v) {
+					Bundle bundle = new Bundle();
+					bundle.putString(DUEL_USERNAME, users.get(v.getId()));
+					bundle.putInt(Dashboard.USER_MONEY, money);
+					bundle.putStringArrayList(Dashboard.INVENTORY, inventory);
 					Intent intent = new Intent(Duel.this, DuelUserActivity.class);
-					intent.putExtra(DUEL_USERNAME, users.get(v.getId()));
+					intent.putExtras(bundle);
 					startActivity(intent); 
 			      }
 			});

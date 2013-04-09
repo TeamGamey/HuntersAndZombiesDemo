@@ -1,5 +1,7 @@
 package com.example.huntersandzombiesdemo;
 
+import java.util.ArrayList;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -16,16 +18,22 @@ public class DuelUserActivity extends Activity {
 	private String duelUsername;
 	private TextView userLabel;
 	private Button duelBtn;
+	private ArrayList<String> inventory;
+	private int money;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_duel_user);
-		Intent data = getIntent();
-		if (data!=null){
-			duelUsername = data.getStringExtra(Duel.DUEL_USERNAME);
+		Bundle bundle = getIntent().getExtras();
+		if (bundle!=null){
+			duelUsername = bundle.getString(Duel.DUEL_USERNAME);
 			userLabel = (TextView) findViewById(R.id.duelUserName);
 			userLabel.setText(duelUsername);
+			inventory = bundle.getStringArrayList(Dashboard.INVENTORY);
+			money = bundle.getInt(Dashboard.USER_MONEY);
+			
+			
 		}
 		
 		duelBtn = (Button) findViewById(R.id.duelButton);
@@ -40,7 +48,7 @@ public class DuelUserActivity extends Activity {
 						DuelUserActivity.this);
 				alertDialogBuilder.setTitle("Congratulations!");
 				alertDialogBuilder.setMessage("You have won a duel against "+duelUsername+"!\nYou have won 20 coins.");
-				Dashboard.money+=20;
+				money+=20;
 				alertDialogBuilder.setNeutralButton("Close",new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
@@ -54,6 +62,7 @@ public class DuelUserActivity extends Activity {
 	
 	private void launchIntent() {
         Intent it = new Intent(DuelUserActivity.this,Dashboard.class);
+        it.putExtra(Dashboard.USER_MONEY,money );
         startActivity(it); 
     }
 

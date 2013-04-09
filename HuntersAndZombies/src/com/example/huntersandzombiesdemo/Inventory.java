@@ -3,6 +3,7 @@ package com.example.huntersandzombiesdemo;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
@@ -13,7 +14,7 @@ import android.widget.TextView;
 
 public class Inventory extends Activity {
 	private TextView moneyLeft;
-	private Button returnToDash;
+	private Button returnToDashBtn;
 	private int money;
 	private ArrayList<String> inventory;
 
@@ -21,16 +22,34 @@ public class Inventory extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_inventory);
-		moneyLeft = (TextView) findViewById(R.id.moneyLeft);
-		Bundle extras = getIntent().getExtras();
+
 		
+		moneyLeft = (TextView) findViewById(R.id.moneyLeft);
+		returnToDashBtn = (Button)findViewById(R.id.inventoryToDashbtn);
+		returnToDashBtn.setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				 Bundle bundle = new Bundle();
+				 bundle.putInt(Dashboard.USER_MONEY, money);
+				 bundle.putStringArrayList(Dashboard.INVENTORY, inventory);
+				 Intent intent = new Intent(Inventory.this, Dashboard.class);
+				 intent.putExtras(bundle);
+				 setResult(RESULT_OK, intent);
+				 startActivity(intent);
+				 finish();
+			}
+			
+		});
+		
+		Bundle extras = getIntent().getExtras();
 		if(extras!=null){
+			
 			money = extras.getInt(Dashboard.USER_MONEY);
 			inventory = extras.getStringArrayList(Dashboard.INVENTORY);
-			
-//			 if(money!=null){
-				moneyLeft.setText(money);
-//			}
+			moneyLeft.setText(Integer.toString(money));
+			System.out.println(money);
 			
 		}
 		
@@ -44,28 +63,33 @@ public class Inventory extends Activity {
 	}
 	public void purchaseItem1(View view){
 		//Add item to inventory
-		//Subtract Dashboard.money flow
-		if( Dashboard.money >= 100){
-			Dashboard.money -= 100;
-			Dashboard.inventory.add("Baseball Bat");
-			moneyLeft.setText(Dashboard.money);
+		//Subtract money flow
+//		if( money >= 100){
+//			money -= 100;
+//			inventory.add("Baseball Bat");
+//			moneyLeft.setText(Integer.toString(money));
 			//Remove button
 			Button button = (Button) findViewById(R.id.button1);        
 		    button.setOnClickListener(new OnClickListener() {
 		        public void onClick(View view) {
+		        	if( money >= 100){
+		    			money -= 100;
+		    		inventory.add("Baseball Bat");
+		    		moneyLeft.setText(Integer.toString(money));
 		            ViewGroup parentView = (ViewGroup) view.getParent();
 		            parentView.removeView(view);
+		        	}
 		        }
 		    });
-		}		
+//		}		
 	}
 	public void purchaseItem2(View view){
 		//Add item to inventory
-		//Subtract Dashboard.money flow
-		if( Dashboard.money >= 200){
-			Dashboard.money -= 200;
-			Dashboard.inventory.add("Golf Club");
-			moneyLeft.setText(Dashboard.money);
+		//Subtract money flow
+		if( money >= 200){
+			money -= 200;
+			inventory.add("Golf Club");
+			moneyLeft.setText(Integer.toString(money));
 		//Remove button
 		Button button = (Button) findViewById(R.id.button2);        
 	    button.setOnClickListener(new OnClickListener() {
@@ -78,11 +102,11 @@ public class Inventory extends Activity {
 	}
 	public void purchaseItem3(View view){
 		//Add item to inventory
-		//Subtract Dashboard.money flow
-		if( Dashboard.money >= 300){
-			Dashboard.money -= 300;
-			Dashboard.inventory.add("Mace");
-			moneyLeft.setText(Dashboard.money);
+		//Subtract money flow
+		if( money >= 300){
+			money -= 300;
+			inventory.add("Mace");
+			moneyLeft.setText(Integer.toString(money));
 			//Remove button
 		Button button = (Button) findViewById(R.id.button3);        
 	    button.setOnClickListener(new OnClickListener() {
@@ -95,11 +119,11 @@ public class Inventory extends Activity {
 	}
 	public void purchaseItem4(View view){
 		//Add item to inventory
-		//Subtract Dashboard.money flow
-		if( Dashboard.money >= 400){
-			Dashboard.money -= 400;
-			Dashboard.inventory.add("Flail");
-			moneyLeft.setText(Dashboard.money);
+		//Subtract money flow
+		if( money >= 400){
+			money -= 400;
+			inventory.add("Flail");
+			moneyLeft.setText(Integer.toString(money));
 			//Remove button
 		Button button = (Button) findViewById(R.id.button4);        
 	    button.setOnClickListener(new OnClickListener() {
@@ -112,11 +136,11 @@ public class Inventory extends Activity {
 	}
 	public void purchaseItem5(View view){
 		//Add item to inventory
-		//Subtract Dashboard.money flow
-		if( Dashboard.money >= 500){
-			Dashboard.money -= 500;
-			Dashboard.inventory.add("Crowbar");
-			moneyLeft.setText(Dashboard.money);
+		//Subtract money flow
+		if( money >= 500){
+			money -= 500;
+			inventory.add("Crowbar");
+			moneyLeft.setText(Integer.toString(money));
 		//Remove button
 		Button button = (Button) findViewById(R.id.button5);        
 	    button.setOnClickListener(new OnClickListener() {
