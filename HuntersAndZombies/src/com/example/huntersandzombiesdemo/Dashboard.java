@@ -1,13 +1,13 @@
 package com.example.huntersandzombiesdemo;
 
 import android.content.Intent;
-import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
@@ -168,19 +168,22 @@ public class Dashboard extends FragmentActivity {
      */
     private void setUpMap() {
     	googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-    	
-    	if (googleMap.isMyLocationEnabled()) {
-    		Location x = googleMap.getMyLocation();
-    		googleMap.addMarker(
-    				new MarkerOptions()
-    				.position(new LatLng(x.getLatitude(), x.getLongitude()))
-    				.title("Here you are!"));
-            googleMap.addMarker(new MarkerOptions()
-        	.position(new LatLng(42.36036686, -71.08679982))
-        	.title("Wohoo!"));
-    	}
+//    	if (googleMap.isMyLocationEnabled()) {
+//    		Location x = googleMap.getMyLocation();
+//    		googleMap.addMarker(
+//    				new MarkerOptions()
+//    				.position(new LatLng(x.getLatitude(), x.getLongitude()))
+//    				.title("Here you are!"));
+//            googleMap.addMarker(new MarkerOptions()
+//      	.position(new LatLng(42.36036686, -71.08679982))
+//	     	.title("Wohoo!"));
+//  	}
+    	googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(42.35848655, -71.09211361), 21.0f));
         googleMap.addMarker(new MarkerOptions()
-        	.position(new LatLng(42.36036686, -71.08679982))
-        	.title("Sad!"));
+        	.position(new LatLng(42.35848655, -71.09211361))
+        	.title("Me!"));
+        googleMap.addMarker(new MarkerOptions()
+        	.position(new LatLng(42.35850253, -71.09212430))
+        	.title("Zombie!"));
     }
 }
