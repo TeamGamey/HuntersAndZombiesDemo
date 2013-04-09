@@ -33,5 +33,6 @@
     <string name="buy">Buy</string>
     <string name="inventoryToDashbtn">Return to Dashboard</string>
     <string name="resetLabel">Reset</string>
+    <string name="moneyLeftLabel">Your Cash:\u00A0</string>
 
 </resources>

@@ -8,12 +8,25 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".Inventory" >
     
- 	<TextView
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+         <TextView
+ 	    android:layout_width="wrap_content"
+ 	    android:layout_height="wrap_content"
+ 	    android:id = "@+id/moneyLabel"
+    	android:text = "@string/moneyLeftLabel"
+        android:textAppearance ="?android:attr/textAppearanceLarge" />
+
+        <TextView
  	    android:layout_width="wrap_content"
  	    android:layout_height="wrap_content"
  	    android:id = "@+id/moneyLeft"
     	android:text = ""
         android:textAppearance ="?android:attr/textAppearanceLarge" />
+    </LinearLayout>
+ 	
     
     <TableLayout
         android:paddingTop="50dp"
