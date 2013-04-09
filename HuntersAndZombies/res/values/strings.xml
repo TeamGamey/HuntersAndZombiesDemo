@@ -12,5 +12,6 @@
     <string name="score">Score!</string>
     <string name="title_activity_score">Score</string>
     <string name="title_activity_duel">Duel</string>
+    <string name="title_activity_player">PlayerActivity</string>
 
 </resources>
