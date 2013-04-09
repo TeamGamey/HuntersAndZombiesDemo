@@ -8,7 +8,6 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
@@ -23,9 +22,9 @@ public class Dashboard extends FragmentActivity {
     public final static String USER_NAME = "com.example.huntersandzombies.USERNAME";
     public final static String USER_MONEY = "com.example.huntersandzombies.MONEY";
     public final static String INVENTORY = "com.example.huntersandzombies.INVENTORY";
-    private String username;
-    private int money;
-    private String[] inventory;
+    public static String username;
+    public static int money;
+    public static String[] inventory;
 //    public final static 
     
     
@@ -58,7 +57,8 @@ public class Dashboard extends FragmentActivity {
 			bundle.putStringArray(INVENTORY, inventory);
 			Intent intent = new Intent(Dashboard.this, Score.class);
 			intent.putExtras(bundle);
-			startActivityForResult(intent, 1); //add request code for each
+//			startActivityForResult(intent, 1); //add request code for each
+			startActivity(intent);
 		}
 	};
 	
@@ -97,7 +97,7 @@ public class Dashboard extends FragmentActivity {
 			bundle.putStringArray(INVENTORY, inventory);
 			Intent intent = new Intent(Dashboard.this, Duel.class);
 			intent.putExtras(bundle);
-			startActivityForResult(intent,3);
+			startActivity(intent);
 		}
 	};
 	
@@ -168,22 +168,19 @@ public class Dashboard extends FragmentActivity {
      */
     private void setUpMap() {
     	googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-//    	if (googleMap.isMyLocationEnabled()) {
-//    		Location x = googleMap.getMyLocation();
-//    		googleMap.addMarker(
-//    				new MarkerOptions()
-//    				.position(new LatLng(x.getLatitude(), x.getLongitude()))
-//    				.title("Here you are!"));
-//            googleMap.addMarker(new MarkerOptions()
-//      	.position(new LatLng(42.36036686, -71.08679982))
-//	     	.title("Wohoo!"));
-//  	}
-    	googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(42.35848655, -71.09211361), 21.0f));
+    	
+    	if (googleMap.isMyLocationEnabled()) {
+    		Location x = googleMap.getMyLocation();
+    		googleMap.addMarker(
+    				new MarkerOptions()
+    				.position(new LatLng(x.getLatitude(), x.getLongitude()))
+    				.title("Here you are!"));
+            googleMap.addMarker(new MarkerOptions()
+        	.position(new LatLng(42.36036686, -71.08679982))
+        	.title("Wohoo!"));
+    	}
         googleMap.addMarker(new MarkerOptions()
-        	.position(new LatLng(42.35848655, -71.09211361))
-        	.title("Me!"));
-        googleMap.addMarker(new MarkerOptions()
-        	.position(new LatLng(42.35850253, -71.09212430))
-        	.title("Zombie!"));
+        	.position(new LatLng(42.36036686, -71.08679982))
+        	.title("Sad!"));
     }
 }

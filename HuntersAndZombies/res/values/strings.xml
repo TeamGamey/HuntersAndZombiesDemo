@@ -13,5 +13,10 @@
     <string name="title_activity_score">Score</string>
     <string name="title_activity_duel">Duel</string>
     <string name="title_activity_player">PlayerActivity</string>
+    <string name="duel_label">Duel</string>
+    <string name="title_activity_duel_user">DuelUserActivity</string>
+    <string name="woodenSword">Wooden Sword</string>
+    <string name="weapons">Choose a weapon to initiate the duel</string>
+    <string name="initiateDuel">Initiate Duel!</string>
 
 </resources>
