@@ -32,7 +32,7 @@ public class Dashboard extends FragmentActivity {
     public static String username;
     public static int money;   
     public static ArrayList<String> inventory = new ArrayList<String>();
-
+    public static GPSTracker gpsTracker;
     
     
 	
@@ -43,6 +43,13 @@ public class Dashboard extends FragmentActivity {
 		Intent intent = getIntent();
 		
         setUpMapIfNeeded();
+		gpsTracker = new GPSTracker(this);
+		if (gpsTracker.canGetLocation()) {
+			googleMap.addMarker(new MarkerOptions()
+        		.position(new LatLng(gpsTracker.getLatitude(), gpsTracker.getLongitude()))
+        		.title("gps tracker for the win!!!"));
+		}
+		
 		inventory = new ArrayList<String>();
 		scoreButton = (Button) findViewById(R.id.scoreButton);
 		duelButton = (Button) findViewById(R.id.duelButton);
@@ -52,6 +59,7 @@ public class Dashboard extends FragmentActivity {
 		inventoryButton.setOnClickListener(inventoryHandler);
 		duelButton.setOnClickListener(duelHandler);
 		resetButton.setOnClickListener(resetHandler);
+		
 		if(!intent.hasExtra(USER_MONEY)){
 			money = 100; //default value
 			showInstructions();
