@@ -1,13 +1,23 @@
 package com.example.huntersandzombiesdemo;
 
+
+import com.parse.LogInCallback;
+import com.parse.Parse;
+import com.parse.ParseAnalytics;
+import com.parse.ParseException;
+import com.parse.ParseUser;
+import com.parse.SignUpCallback;
+
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
@@ -53,6 +63,8 @@ public class LoginActivity extends Activity {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.activity_login);
+		Parse.initialize(this, "IVMpQf3ccNsiWfdfufivTkjlMHOYC5dgAO8APfjB", "aeC7EJihUm9MQw5lZqw38OnIWvhAY93MJ2JLDm3M"); 
+		ParseAnalytics.trackAppOpened(getIntent());
 
 		// Set up the login form.
 		mEmail = getIntent().getStringExtra(EXTRA_EMAIL);
@@ -141,12 +153,34 @@ public class LoginActivity extends Activity {
 			// form field with an error.
 			focusView.requestFocus();
 		} else {
-			// Show a progress spinner, and kick off a background task to
-			// perform the user login attempt.
 			mLoginStatusMessageView.setText(R.string.login_progress_signing_in);
 			showProgress(true);
-			mAuthTask = new UserLoginTask();
-			mAuthTask.execute((Void) null);
+			final ParseUser user = new ParseUser();
+	        user.setUsername(mEmail);
+	        user.setPassword(mPassword);
+	        user.setEmail(mEmail);
+	        
+			user.signUpInBackground(new SignUpCallback() {
+				public void done(ParseException e) {
+				    if (e == null) {
+//				    	Log.d(TAG, "creating user account");
+				    } else {
+//				    	Log.d(TAG, e.toString());
+				    }
+				}
+			});
+			startActivity(new Intent(getApplicationContext(), Dashboard.class));
+			
+//			ParseUser.logInInBackground(mEmail, mPassword, new LogInCallback() {
+//        		public void done(ParseUser user, ParseException e) {
+//        			if (user != null) {
+//        	        	startActivity(new Intent(getApplicationContext(), Dashboard.class));
+//        			}
+////        			} else {
+////        				startActivity(new Intent(getApplicationContext(), QUserActivity.class));
+////        			}
+//        		}
+//			});
 		}
 	}
 
