@@ -1,11 +1,15 @@
 package com.example.huntersandzombiesdemo;
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.location.Location;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.view.View;
@@ -16,10 +20,54 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+class UpdateLocationTimerTask extends TimerTask {
+	private Handler handler;
+	
+	private GPSTracker gpsTracker;
+	private GoogleMap googleMap;
+	private int iteration;
+
+	private Marker myLocationMarker;
+	
+	public UpdateLocationTimerTask(Context context, GPSTracker gpsTracker, GoogleMap googleMap) {
+		this.gpsTracker = gpsTracker;
+		this.googleMap = googleMap;
+		this.handler = new Handler();
+		this.myLocationMarker = null;
+		this.iteration = 0;
+
+		if (this.gpsTracker.canGetLocation()) {
+			Location myLocation = this.gpsTracker.getLocation();
+			myLocationMarker = googleMap.addMarker(new MarkerOptions()
+				.position(new LatLng(myLocation.getLatitude(), myLocation.getLongitude())).title("Me!"));
+		}
+	}
+	
+	@Override
+	public void run() {
+		new Thread(new Runnable(){
+			@Override
+			public void run() {
+				handler.post(new Runnable(){
+					@Override
+					public void run() {
+						if (gpsTracker.canGetLocation()) {
+							myLocationMarker.remove();
+							Location myLocation = gpsTracker.getLocation();
+							iteration++;
+							myLocationMarker = googleMap.addMarker(new MarkerOptions()
+								.position(new LatLng(myLocation.getLatitude(), myLocation.getLongitude())).title("Me!" + iteration));
+						}
+					}});
+			}}).start();
+	}
+}
 
 public class Dashboard extends FragmentActivity {
+	private static final int UPDATE_LOCATION_PERIOD = 5000;
 	private Button inventoryButton;
 	private Button scoreButton;
 	private Button duelButton;
@@ -35,7 +83,6 @@ public class Dashboard extends FragmentActivity {
     public static GPSTracker gpsTracker;
     
     
-	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -44,11 +91,9 @@ public class Dashboard extends FragmentActivity {
 		
         setUpMapIfNeeded();
 		gpsTracker = new GPSTracker(this);
-		if (gpsTracker.canGetLocation()) {
-			googleMap.addMarker(new MarkerOptions()
-        		.position(new LatLng(gpsTracker.getLatitude(), gpsTracker.getLongitude()))
-        		.title("gps tracker for the win!!!"));
-		}
+		Timer timer = new Timer();
+		TimerTask updateLocation = new UpdateLocationTimerTask(Dashboard.this, gpsTracker, googleMap);
+		timer.scheduleAtFixedRate(updateLocation, 0, UPDATE_LOCATION_PERIOD);
 		
 		inventory = new ArrayList<String>();
 		scoreButton = (Button) findViewById(R.id.scoreButton);
@@ -242,11 +287,5 @@ public class Dashboard extends FragmentActivity {
 //	     	.title("Wohoo!"));
 //  	}
     	googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(42.35848655, -71.09211361), 21.0f));
-        googleMap.addMarker(new MarkerOptions()
-        	.position(new LatLng(42.35848655, -71.09211361))
-        	.title("Me!"));
-        googleMap.addMarker(new MarkerOptions()
-        	.position(new LatLng(42.35850253, -71.09212430))
-        	.title("Zombie!"));
     }
 }
