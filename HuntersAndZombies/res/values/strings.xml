@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">HuntersAndZombiesDemo</string>
+    <string name="app_name">Hunters And Zombies</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">HUNTERS\nAND\nZOMBIES</string>
     <string name="title_activity_dashboard">Dashboard</string>
@@ -21,18 +21,19 @@
     <string name="title_activity_inventory">Inventory</string>
     <string name="item0">Wooden Sword</string>
     <string name="item1">Baseball Bat</string>
-	<string name="item2">Golf Club</string>
-	<string name="item3">Mace</string>
-    <string name="item4">Flail</string>    
+    <string name="item2">Golf Club</string>
+    <string name="item3">Mace</string>
+    <string name="item4">Flail</string>
     <string name="item5">Crowbar</string>
     <string name="price1">100</string>
-	<string name="price2">200</string>
-	<string name="price3">300</string>
-    <string name="price4">400</string>    
+    <string name="price2">200</string>
+    <string name="price3">300</string>
+    <string name="price4">400</string>
     <string name="price5">500</string>
     <string name="buy">Buy</string>
     <string name="inventoryToDashbtn">Return to Dashboard</string>
     <string name="resetLabel">Reset</string>
     <string name="moneyLeftLabel">Your Cash:\u00A0</string>
+    <string name="title_activity_sign_up">Sign up</string>
 
 </resources>

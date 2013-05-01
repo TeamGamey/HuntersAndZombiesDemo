@@ -153,8 +153,8 @@ containing a value of this type.
         public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
-        public static final int action_forgot_password=0x7f04002a;
-        public static final int action_settings=0x7f040029;
+        public static final int action_forgot_password=0x7f04002b;
+        public static final int action_settings=0x7f04002a;
         public static final int button1=0x7f040018;
         public static final int button2=0x7f04001a;
         public static final int button3=0x7f04001c;
@@ -185,6 +185,7 @@ containing a value of this type.
         public static final int satellite=0x7f040002;
         public static final int scoreButton=0x7f040007;
         public static final int sign_in_button=0x7f040028;
+        public static final int sign_up_button=0x7f040029;
         public static final int tableLayout1=0x7f040015;
         public static final int tableRow0=0x7f040016;
         public static final int tableRow1=0x7f040017;
@@ -215,12 +216,15 @@ containing a value of this type.
         public static final int login=0x7f090004;
         public static final int player=0x7f090005;
         public static final int score=0x7f090006;
+        public static final int sign_up=0x7f090007;
+        public static final int signup=0x7f090008;
     }
     public static final class string {
-        public static final int action_forgot_password=0x7f050037;
+        public static final int action_forgot_password=0x7f05003a;
         public static final int action_settings=0x7f050015;
-        public static final int action_sign_in_register=0x7f050035;
-        public static final int action_sign_in_short=0x7f050036;
+        public static final int action_sign_in_register=0x7f050038;
+        public static final int action_sign_in_short=0x7f050039;
+        public static final int action_sign_up=0x7f050042;
         public static final int app_name=0x7f050011;
         /**   Title for notification shown when GooglePlayServices is unavailable [CHAR LIMIT=70] 
          */
@@ -232,6 +236,7 @@ containing a value of this type.
          */
         public static final int auth_client_requested_by_msg=0x7f050010;
         public static final int buy=0x7f05002e;
+        public static final int chooseClan=0x7f050043;
         /**  Button in confirmation dialog to enable Google Play services.  Clicking it
         will direct user to application settings of Google Play services where they
         can enable it [CHAR LIMIT=40] 
@@ -289,10 +294,10 @@ containing a value of this type.
         public static final int duel_label=0x7f05001d;
         public static final int dummy_button=0x7f050012;
         public static final int dummy_content=0x7f050013;
-        public static final int error_field_required=0x7f05003c;
-        public static final int error_incorrect_password=0x7f05003b;
-        public static final int error_invalid_email=0x7f050039;
-        public static final int error_invalid_password=0x7f05003a;
+        public static final int error_field_required=0x7f05003f;
+        public static final int error_incorrect_password=0x7f05003e;
+        public static final int error_invalid_email=0x7f05003c;
+        public static final int error_invalid_password=0x7f05003d;
         public static final int hello_world=0x7f050016;
         public static final int initiateDuel=0x7f050021;
         public static final int inventoryToDashbtn=0x7f05002f;
@@ -302,17 +307,20 @@ containing a value of this type.
         public static final int item3=0x7f050026;
         public static final int item4=0x7f050027;
         public static final int item5=0x7f050028;
-        public static final int login_progress_signing_in=0x7f050038;
+        public static final int login_progress_signing_in=0x7f05003b;
         public static final int moneyLeftLabel=0x7f050031;
         public static final int price1=0x7f050029;
         public static final int price2=0x7f05002a;
         public static final int price3=0x7f05002b;
         public static final int price4=0x7f05002c;
         public static final int price5=0x7f05002d;
+        public static final int prompt_email=0x7f050036;
+        public static final int prompt_password=0x7f050037;
         /**  Strings related to login 
          */
-        public static final int prompt_email=0x7f050033;
-        public static final int prompt_password=0x7f050034;
+        public static final int prompt_username=0x7f050035;
+        public static final int radio_hunter=0x7f050040;
+        public static final int radio_zombie=0x7f050041;
         public static final int resetLabel=0x7f050030;
         public static final int score=0x7f050019;
         public static final int shop_inventory=0x7f050017;
@@ -320,10 +328,12 @@ containing a value of this type.
         public static final int title_activity_duel=0x7f05001b;
         public static final int title_activity_duel_user=0x7f05001e;
         public static final int title_activity_inventory=0x7f050022;
-        public static final int title_activity_login=0x7f050032;
+        public static final int title_activity_login=0x7f050033;
         public static final int title_activity_player=0x7f05001c;
         public static final int title_activity_score=0x7f05001a;
+        public static final int title_activity_sign_up=0x7f050032;
         public static final int weapons=0x7f050020;
+        public static final int welcome=0x7f050034;
         public static final int woodenSword=0x7f05001f;
     }
     public static final class style {

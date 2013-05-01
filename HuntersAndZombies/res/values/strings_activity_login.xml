@@ -1,11 +1,13 @@
 <resources>
 
     <string name="title_activity_login">Sign in</string>
+    <string name="welcome">Welcome to Hunters and Zombies! Sign up below to start.</string>
 
     <!-- Strings related to login -->
+    <string name="prompt_username">Username</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
-    <string name="action_sign_in_register"><b>Sign in</b> or register</string>
+    <string name="action_sign_in_register"><b>Log in</b></string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="action_forgot_password">Recover lost password</string>
     <string name="login_progress_signing_in">Signing in&#8230;</string>
@@ -13,5 +15,9 @@
     <string name="error_invalid_password">This password is too short</string>
     <string name="error_incorrect_password">This password is incorrect</string>
     <string name="error_field_required">This field is required</string>
+    <string name="radio_hunter">Hunters: the humans that are fighting the zombies</string>
+    <string name="radio_zombie">Zombies: they are trying to take over the world</string>
+    <string name="action_sign_up">No Account? Sign up here</string>
+    <string name="chooseClan">Choose a clan to join!</string>
 
 </resources>

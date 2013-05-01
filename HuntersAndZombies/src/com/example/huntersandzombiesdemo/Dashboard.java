@@ -24,7 +24,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.parse.Parse;
 import com.parse.ParseAnalytics;
-import com.parse.ParseObject;
+import com.parse.ParseUser;
 
 class UpdateLocationTimerTask extends TimerTask {
 	private Handler handler;
@@ -93,10 +93,12 @@ public class Dashboard extends FragmentActivity {
 		Intent intent = getIntent();
 		Parse.initialize(this, "IVMpQf3ccNsiWfdfufivTkjlMHOYC5dgAO8APfjB", "aeC7EJihUm9MQw5lZqw38OnIWvhAY93MJ2JLDm3M"); 
 		ParseAnalytics.trackAppOpened(getIntent());
-//		ParseObject testObject = new ParseObject("TestObject");
-//		testObject.put("foo", "bar");
-//		testObject.saveInBackground();
-		
+		ParseUser currentUser = ParseUser.getCurrentUser();
+		if (currentUser == null) {
+		  // get the new user
+			startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+			finish();
+		} else {		
         setUpMapIfNeeded();
 		gpsTracker = new GPSTracker(this);
 		Timer timer = new Timer();
@@ -120,6 +122,7 @@ public class Dashboard extends FragmentActivity {
 		else{
 			money = intent.getIntExtra(USER_NAME, 100);
 		}
+	}
 		
 
 	}
