@@ -35,5 +35,5 @@
     <string name="resetLabel">Reset</string>
     <string name="moneyLeftLabel">Your Cash:\u00A0</string>
     <string name="title_activity_sign_up">Sign up</string>
-
+	<string name="testParse">Test Parse!</string>
 </resources>
