@@ -8,11 +8,14 @@ import java.util.TimerTask;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.Settings;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
@@ -30,9 +33,11 @@ import com.parse.Parse;
 import com.parse.ParseAnalytics;
 import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
+import com.parse.ParseInstallation;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.parse.PushService;
 import com.parse.SaveCallback;
 
 class UpdateLocationTimerTask extends TimerTask {
@@ -109,6 +114,12 @@ class UpdateLocationTimerTask extends TimerTask {
 											location.saveInBackground();					
 										}
 									});
+									currentUser.put("location", myParseGP);
+									currentUser.saveInBackground(new SaveCallback(){
+										public void done(ParseException e){
+											Log.d("Dashboard", "location saved");
+										}
+									});
 								}
 							});		
 							//Retrieving other locations
@@ -134,6 +145,7 @@ class UpdateLocationTimerTask extends TimerTask {
 								}
 							});							
 						}
+
 
 
 					}});
@@ -163,9 +175,11 @@ public class Dashboard extends FragmentActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_dashboard);
 		Intent intent = getIntent();
-		//		Parse.initialize(this, "IVMpQf3ccNsiWfdfufivTkjlMHOYC5dgAO8APfjB", "aeC7EJihUm9MQw5lZqw38OnIWvhAY93MJ2JLDm3M"); 
+//				Parse.initialize(this, "IVMpQf3ccNsiWfdfufivTkjlMHOYC5dgAO8APfjB", "aeC7EJihUm9MQw5lZqw38OnIWvhAY93MJ2JLDm3M"); 
 
 		Parse.initialize(this, "LtZV0e5xH56B9pBgRv9PvzsXf2VM8t1sWPkOgsI3", "jDhUAqESu8KPfZLcfOIcb2cq6EaVmNiYE0W0H0XX");
+		PushService.setDefaultPushCallback(this, Dashboard.class);
+		ParseInstallation.getCurrentInstallation().saveInBackground();
 		ParseAnalytics.trackAppOpened(getIntent());
 		currentUser = ParseUser.getCurrentUser();
 		if (currentUser == null) {
@@ -175,6 +189,18 @@ public class Dashboard extends FragmentActivity {
 		} else {		
 			setUpMapIfNeeded();
 			gpsTracker = new GPSTracker(this);
+			if(!gpsTracker.canGetLocation()){
+				AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(Dashboard.this);
+				alertDialogBuilder.setTitle("Error: Cannot access GPS location");
+				alertDialogBuilder.setMessage("This application requires the use of GPS location serviers. Please enable it :-)");
+				alertDialogBuilder.setNeutralButton("Ok",new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						// TODO Auto-generated method stub
+						enableLocationSettings();
+					}
+				} ).show();  	
+			}
 			Timer timer = new Timer();
 			TimerTask updateLocation = new UpdateLocationTimerTask(Dashboard.this, gpsTracker, googleMap, currentUser);
 			timer.scheduleAtFixedRate(updateLocation, 0, UPDATE_LOCATION_PERIOD);
@@ -200,7 +226,12 @@ public class Dashboard extends FragmentActivity {
 
 
 	}
+	private void enableLocationSettings() {
+	    Intent settingsIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+	    startActivity(settingsIntent);
+	}
 
+	
 	private void showInstructions(){
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
 				Dashboard.this);
