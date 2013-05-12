@@ -123,10 +123,11 @@ class UpdateLocationTimerTask extends TimerTask {
 								}
 							});		
 							//Retrieving other locations
-							ParseQuery queryOtherLoc = new ParseQuery("Locations");
-							queryOtherLoc.whereWithinKilometers("location", myParseGP, .01);
-							queryOtherLoc.whereNotEqualTo("username", currentUser);
-							queryOtherLoc.findInBackground(new FindCallback(){
+							ParseQuery queryLoc = ParseUser.getQuery();
+							queryLoc.whereExists("location");
+							queryLoc.whereWithinMiles("location", myParseGP, 1.0);
+							queryLoc.whereNotEqualTo("username", currentUser.getUsername());
+							queryLoc.findInBackground(new FindCallback(){
 								public void done(List<ParseObject> object, ParseException e){
 									for(Marker obj : otherLocationMarker){
 										obj.remove();
@@ -143,7 +144,29 @@ class UpdateLocationTimerTask extends TimerTask {
 										}
 									}
 								}
-							});							
+							});	
+							
+//							ParseQuery queryOtherLoc = new ParseQuery("Locations");
+//							queryOtherLoc.whereWithinKilometers("location", myParseGP, .01);
+//							queryOtherLoc.whereNotEqualTo("username", currentUser);
+//							queryOtherLoc.findInBackground(new FindCallback(){
+//								public void done(List<ParseObject> object, ParseException e){
+//									for(Marker obj : otherLocationMarker){
+//										obj.remove();
+//									}
+//									otherLocationMarker.clear();
+//									if (object != null && object.size() > 0){
+//										for (ParseObject obj : object){
+//											otherLocationMarker.add(
+//													googleMap.addMarker(new MarkerOptions()
+//											.position(new LatLng(obj.getParseGeoPoint("location").getLatitude(),
+//													obj.getParseGeoPoint("location").getLongitude()))
+//											.title("??" + obj.get("username").toString())
+//											.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))));
+//										}
+//									}
+//								}
+//							});							
 						}
 
 
@@ -178,15 +201,22 @@ public class Dashboard extends FragmentActivity {
 //				Parse.initialize(this, "IVMpQf3ccNsiWfdfufivTkjlMHOYC5dgAO8APfjB", "aeC7EJihUm9MQw5lZqw38OnIWvhAY93MJ2JLDm3M"); 
 
 		Parse.initialize(this, "LtZV0e5xH56B9pBgRv9PvzsXf2VM8t1sWPkOgsI3", "jDhUAqESu8KPfZLcfOIcb2cq6EaVmNiYE0W0H0XX");
-		PushService.setDefaultPushCallback(this, Dashboard.class);
-		ParseInstallation.getCurrentInstallation().saveInBackground();
-		ParseAnalytics.trackAppOpened(getIntent());
+
 		currentUser = ParseUser.getCurrentUser();
 		if (currentUser == null) {
 			// get the new user
 			startActivity(new Intent(getApplicationContext(), LoginActivity.class));
 			finish();
-		} else {		
+		} else {	
+			PushService.setDefaultPushCallback(this, Dashboard.class);
+//			PushService.subscribe(this, currentUser.getUsername(), Dashboard.class);
+			
+			ParseInstallation installation = ParseInstallation.getCurrentInstallation();
+			installation.put("owner",currentUser);
+			installation.put("email", currentUser.getUsername());
+			installation.saveInBackground();
+			ParseAnalytics.trackAppOpened(getIntent());
+			
 			setUpMapIfNeeded();
 			gpsTracker = new GPSTracker(this);
 			if(!gpsTracker.canGetLocation()){
@@ -217,7 +247,7 @@ public class Dashboard extends FragmentActivity {
 
 			if(!intent.hasExtra(USER_MONEY)){
 				money = 100; //default value
-				showInstructions();
+				//showInstructions();
 			}
 			else{
 				money = intent.getIntExtra(USER_NAME, 100);
