@@ -82,6 +82,11 @@
             android:name="com.example.huntersandzombiesdemo.SignUpActivity"
             android:label="@string/title_activity_sign_up" >
         </activity>
+        
+        <activity
+            android:name="com.example.huntersandzombiesdemo.AcceptDuel"
+            android:label="@string/title_activity_accept_duel" >
+        </activity>
 
         <service android:name="com.parse.PushService" />
 
@@ -91,11 +96,13 @@
                 <action android:name="android.intent.action.USER_PRESENT" />
             </intent-filter>
         </receiver>
-
-        <activity
-            android:name="com.example.huntersandzombiesdemo.AcceptDuel"
-            android:label="@string/title_activity_accept_duel" >
-        </activity>
+        
+        <receiver android:name="com.example.huntersandzombiesdemo.MyReceiver">
+            <intent-filter>
+                <action android:name="com.example.huntersandzombiesdemo.DUEL_USER" />
+            </intent-filter>
+        </receiver>
+        
     </application>
 
 </manifest>

@@ -151,7 +151,7 @@ public class Dashboard extends FragmentActivity {
 			startActivity(new Intent(getApplicationContext(), LoginActivity.class));
 			finish();
 		} else {	
-			PushService.setDefaultPushCallback(this, Dashboard.class);
+			//PushService.setDefaultPushCallback(this, Dashboard.class);
 			
 			ParseInstallation installation = ParseInstallation.getCurrentInstallation();
 			installation.put("username",currentUser.getUsername());

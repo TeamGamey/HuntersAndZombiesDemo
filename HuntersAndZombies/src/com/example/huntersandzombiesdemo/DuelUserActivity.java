@@ -43,9 +43,7 @@ public class DuelUserActivity extends Activity {
 			userLabel = (TextView) findViewById(R.id.duelUserName);
 			userLabel.setText(duelUsername);
 			inventory = bundle.getStringArrayList(Dashboard.INVENTORY);
-			money = bundle.getInt(Dashboard.USER_MONEY);
-			
-			
+			money = bundle.getInt(Dashboard.USER_MONEY);	
 		}
 		
 		duelBtn = (Button) findViewById(R.id.duelButton);
@@ -59,8 +57,9 @@ public class DuelUserActivity extends Activity {
 				
 				JSONObject data;
 				try {
-					data = new JSONObject("{\"alert\": \""+currentUser.getUsername()+" has challenged you to a duel!\","+
-							"\"user\": \""+currentUser.getUsername()+"\""+
+					data = new JSONObject("{\"action\": \"com.example.huntersandzombiesdemo.DUEL_USER\"," +
+							"\"alert\": \""+currentUser.getUsername()+" has challenged you to a duel!\","+
+							"\"user\": \""+currentUser.getUsername()+"\","+
 							"\"weapon\": \"wooden sword\"}");
 					ParseQuery pushQuery = ParseInstallation.getQuery();
 					pushQuery.whereEqualTo("username", duelUsername);

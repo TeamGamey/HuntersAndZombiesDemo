@@ -66,7 +66,7 @@ public class Duel extends Activity {
 //		});	
 		ParseQuery query = ParseUser.getQuery();
 		query.whereExists("location");
-		query.whereWithinMiles("location", myParseGP, .005);
+		query.whereWithinMiles("location", myParseGP, .5);
 		query.whereNotEqualTo("username", currentUser.getUsername());
 		//Retrieving other locations
 //		ParseQuery queryOtherLoc = new ParseQuery("Locations");
