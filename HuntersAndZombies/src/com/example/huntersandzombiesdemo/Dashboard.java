@@ -95,6 +95,24 @@ class UpdateLocationTimerTask extends TimerTask {
 							queryLoc.whereExists("location");
 							queryLoc.whereWithinMiles("location", myParseGP, 1);
 							queryLoc.whereNotEqualTo("username", currentUser.getUsername());
+//							queryLoc.findInBackground(new FindCallback(){
+//								public void done(List<ParseObject> object, ParseException e){
+//									for(Marker obj : otherLocationMarker){
+//										obj.remove();
+//									}
+//									otherLocationMarker.clear();
+//									if (object != null && object.size() > 0){
+//										for (ParseObject obj : object){
+//											otherLocationMarker.add(
+//													googleMap.addMarker(new MarkerOptions()
+//											.position(new LatLng(obj.getParseGeoPoint("location").getLatitude(),
+//													obj.getParseGeoPoint("location").getLongitude()))
+//											.title("??" + obj.get("username").toString())
+//											.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))));
+//										}
+//									}
+//								}
+//							});	
 							queryLoc.findInBackground(new FindCallback(){
 								public void done(List<ParseObject> object, ParseException e){
 									for(Marker obj : otherLocationMarker){
@@ -103,16 +121,26 @@ class UpdateLocationTimerTask extends TimerTask {
 									otherLocationMarker.clear();
 									if (object != null && object.size() > 0){
 										for (ParseObject obj : object){
-											otherLocationMarker.add(
-													googleMap.addMarker(new MarkerOptions()
-											.position(new LatLng(obj.getParseGeoPoint("location").getLatitude(),
-													obj.getParseGeoPoint("location").getLongitude()))
-											.title("??" + obj.get("username").toString())
-											.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))));
+											if (obj.getInt("Zombie") == currentUser.getInt("Zombie")){
+												otherLocationMarker.add(
+														googleMap.addMarker(new MarkerOptions()
+														.position(new LatLng(obj.getParseGeoPoint("location").getLatitude(),
+																obj.getParseGeoPoint("location").getLongitude()))
+																.title(obj.get("username").toString())
+																.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))));												
+											}
+											else{
+												otherLocationMarker.add(
+														googleMap.addMarker(new MarkerOptions()
+														.position(new LatLng(obj.getParseGeoPoint("location").getLatitude(),
+																obj.getParseGeoPoint("location").getLongitude()))
+																.title(obj.get("username").toString())
+																.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))));												
+											}
 										}
 									}
 								}
-							});							
+							});
 						}
 					}});
 			}}).start();
@@ -261,7 +289,8 @@ public class Dashboard extends FragmentActivity {
 			bundle.putInt(USER_MONEY, money);
 			bundle.putStringArrayList(INVENTORY, inventory);
 			intent.putExtras(bundle);
-			startActivityForResult(intent, INVENTORY_REQUEST);
+			//startActivityForResult(intent, INVENTORY_REQUEST);
+			startActivity(intent);
 		}
 	};
 
