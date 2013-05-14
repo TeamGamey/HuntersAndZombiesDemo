@@ -30,12 +30,6 @@
             android:text="User has challenged you to a duel. Select a weapon to fight back!"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
-        <RadioButton
-            android:id="@+id/radioButton1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="RadioButton" />
-
     </LinearLayout>
 
     <Button
@@ -46,5 +40,21 @@
         android:layout_alignRight="@+id/linearLayout1"
         android:layout_marginBottom="28dp"
         android:text="Duel!" />
+
+    <RadioGroup
+        android:id="@+id/radioGroup2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/linearLayout1"
+        android:layout_below="@+id/linearLayout1" >
+
+        <RadioButton
+            android:id="@+id/radio1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="@string/woodenSword" />
+
+    </RadioGroup>    
 
 </RelativeLayout>

@@ -83,7 +83,7 @@ class UpdateLocationTimerTask extends TimerTask {
 							iteration++;
 							myLocationMarker = googleMap.addMarker(new MarkerOptions().position(
 									new LatLng(myLocation.getLatitude(), myLocation.getLongitude()))
-									.title("Me!" + iteration));
+									.title("Me!"));
 							currentUser.put("location", myParseGP);
 							currentUser.saveInBackground(new SaveCallback(){
 										public void done(ParseException e){
@@ -163,7 +163,8 @@ public class Dashboard extends FragmentActivity {
 	public static ArrayList<String> inventory = new ArrayList<String>();
 	public static GPSTracker gpsTracker;
 	private ParseUser currentUser;
-
+	private int zombieType;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -214,8 +215,21 @@ public class Dashboard extends FragmentActivity {
 			scoreButton.setOnClickListener(scoreHandler);
 			inventoryButton.setOnClickListener(inventoryHandler);
 			duelButton.setOnClickListener(duelHandler);
-			resetButton.setOnClickListener(resetHandler);
-
+//			resetButton.setOnClickListener(resetHandler);
+			ParseQuery queryType = ParseUser.getQuery();
+			queryType.findInBackground(new FindCallback(){
+				public void done(List<ParseObject> object, ParseException e){
+					for (ParseObject obj: object){
+						zombieType = obj.getInt("Zombie");
+					}
+					if (zombieType == 1){
+						resetButton.setText("Zombie");
+					}
+					if (zombieType == 2){
+						resetButton.setText("Hunter");
+					}
+				}
+			});
 			if(!intent.hasExtra(USER_MONEY)){
 				money = 100; //default value
 				//showInstructions();
@@ -241,7 +255,7 @@ public class Dashboard extends FragmentActivity {
 		alertDialogBuilder.setNeutralButton("Close", null).show();
 	}
 
-	View.OnClickListener resetHandler = new View.OnClickListener() {
+/*	View.OnClickListener resetHandler = new View.OnClickListener() {
 
 		@Override
 		public void onClick(View v) {
@@ -257,7 +271,7 @@ public class Dashboard extends FragmentActivity {
 
 		}
 	};
-	/*
+*/	/*
 	 * on click listener for the scorebutton
 	 */
 	View.OnClickListener scoreHandler = new View.OnClickListener() {		

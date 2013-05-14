@@ -1,6 +1,8 @@
 package com.example.huntersandzombiesdemo;
 
 
+import java.util.Arrays;
+
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
@@ -21,6 +23,7 @@ import com.parse.LogInCallback;
 import com.parse.Parse;
 import com.parse.ParseAnalytics;
 import com.parse.ParseException;
+import com.parse.ParseObject;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 
@@ -218,10 +221,18 @@ public class LoginActivity extends Activity {
 			else{
 				user.put("Zombie",2);
 			}
+			
+			
 	        
 			user.signUpInBackground(new SignUpCallback() {
 				public void done(ParseException e) {
 				    if (e == null) {
+				    	user.put("score", 0);
+				    	ParseObject moneyObj = new ParseObject("Money");
+						moneyObj.put("username",user);
+						moneyObj.put("money",150);
+						moneyObj.put("inventory",Arrays.asList(false,false,false,false,false));
+				    	moneyObj.saveInBackground();
 //				    	startActivity(new Intent(getApplicationContext(), Dashboard.class));
 //				    	Log.d(TAG, "creating user account");
 				    } else {

@@ -8,29 +8,17 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".Score" >
 
-    <TextView
-        android:id="@+id/scoreView"
+<!--     <TextView
+        android:id="@+id/scoreView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/lead"
         android:textAppearance = "?android:attr/textAppearanceLarge" />
-	
-    <Button
-        android:id="@+id/testButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView1"
-        android:layout_below="@+id/textView1"
-        android:layout_marginTop="133dp"
-        android:layout_weight="1"
-        android:text="@string/testParse" />
-
-    <EditText
-        android:id="@+id/editText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/scoreView"
-        android:layout_below="@+id/scoreView"
-        android:layout_marginTop="20dp"
-        android:text="TextView" />
- </RelativeLayout>
+ -->
+    <TableLayout
+        android:id="@+id/scoreView"
+        android:paddingTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+    </TableLayout>
+</RelativeLayout>
