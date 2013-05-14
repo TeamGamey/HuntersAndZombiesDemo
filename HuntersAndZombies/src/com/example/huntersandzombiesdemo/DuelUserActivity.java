@@ -57,7 +57,7 @@ public class DuelUserActivity extends Activity {
 				
 				JSONObject data;
 				try {
-					data = new JSONObject("{\"action\": \"com.example.huntersandzombiesdemo.DUEL_USER\"," +
+					data = new JSONObject(//"{\"action\": \"com.example.huntersandzombiesdemo.DUEL_USER\"," +
 							"\"alert\": \""+currentUser.getUsername()+" has challenged you to a duel!\","+
 							"\"user\": \""+currentUser.getUsername()+"\","+
 							"\"weapon\": \"wooden sword\"}");
