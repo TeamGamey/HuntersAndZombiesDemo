@@ -35,6 +35,10 @@
     <string name="resetLabel">Reset</string>
     <string name="moneyLeftLabel">Your Cash:\u00A0</string>
     <string name="title_activity_sign_up">Sign up</string>
-	<string name="testParse">Test Parse!</string>
-	<string name="items">You own:</string>
+    <string name="testParse">Test Parse!</string>
+    <string name="items">You own:</string>
+    <string name="title_activity_accept_duel">AcceptDuel</string>
+   	<string name="items">You own:</string>
+	<string name="lead">Leaderboard</string>
+
 </resources>

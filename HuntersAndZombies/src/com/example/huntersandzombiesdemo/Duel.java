@@ -66,7 +66,7 @@ public class Duel extends Activity {
 //		});	
 		ParseQuery query = ParseUser.getQuery();
 		query.whereExists("location");
-		query.whereWithinMiles("location", myParseGP, .5);
+		query.whereWithinMiles("location", myParseGP, .005);
 		query.whereNotEqualTo("username", currentUser.getUsername());
 		//Retrieving other locations
 //		ParseQuery queryOtherLoc = new ParseQuery("Locations");
@@ -79,8 +79,10 @@ public class Duel extends Activity {
 				if (object != null && object.size() > 0 && e==null){
 					for (ParseObject obj : object){
 						ParseUser user = (ParseUser)obj;
-						users.put(i, user.getUsername());
-						i++;
+						if (user.getInt("Zombie") != currentUser.getInt("Zombie")){
+							users.put(i, user.getUsername());
+							i++;
+						}
 					}
 				}
 				setupUsers();
@@ -88,15 +90,12 @@ public class Duel extends Activity {
 		});							
 
 
-		//		users.put(5343, "Zombie Monster");
-		//		users.put(3599, "Monster1234524");
-
-		Bundle extras = getIntent().getExtras();
-		if (extras != null) {
-			username = extras.getString(Dashboard.USER_NAME);
-			inventory = extras.getStringArrayList(Dashboard.INVENTORY);
-			money = extras.getInt(Dashboard.USER_MONEY);
-		}
+//		Bundle extras = getIntent().getExtras();
+//		if (extras != null) {
+//			username = extras.getString(Dashboard.USER_NAME);
+//			inventory = extras.getStringArrayList(Dashboard.INVENTORY);
+//			money = extras.getInt(Dashboard.USER_MONEY);
+//		}
 	}
 
 	private void setupUsers(){

@@ -81,51 +81,19 @@ class UpdateLocationTimerTask extends TimerTask {
 							final Location myLocation = gpsTracker.getLocation();
 							final ParseGeoPoint myParseGP= new ParseGeoPoint(myLocation.getLatitude(), myLocation.getLongitude());
 							iteration++;
-							myLocationMarker = googleMap.addMarker(new MarkerOptions()
-							.position(new LatLng(myLocation.getLatitude(), myLocation.getLongitude())).title("Me!" + iteration));
-							ParseQuery query = new ParseQuery("Locations");
-							query.whereEqualTo("username", currentUser);
-							query.findInBackground(new FindCallback(){
-								public void done(List<ParseObject> object, ParseException e){
-									if (object != null && object.size() > 0) {
-										Date mostRecent = null;
-										ParseObject mostRecentObj = null;
-										for (ParseObject obj : object) {
-											Date updatedAt = obj.getDate("updatedAt");
-											if (mostRecent == null || mostRecent.compareTo(updatedAt) <= 0) {
-												mostRecent = updatedAt;
-												mostRecentObj = obj;
-											}
-										}
-										location = mostRecentObj;
-									} else {
-										//										testParseBtn.setText("No locations.");
-										location = new ParseObject("Locations");
-									}
-									//									location.put("longitude", myLocation.getLongitude());
-									//									location.put("latitude", myLocation.getLatitude());	
-									location.put("location", myParseGP);
-									location.put("username",currentUser);
-									location.saveInBackground(new SaveCallback(){
-										public void done(ParseException e){
-											//											location.put("latitude", myLocation.getLatitude());
-											//											location.put("longitude", myLocation.getLongitude());
-											location.put("location", myParseGP);
-											location.saveInBackground();					
-										}
-									});
-									currentUser.put("location", myParseGP);
-									currentUser.saveInBackground(new SaveCallback(){
+							myLocationMarker = googleMap.addMarker(new MarkerOptions().position(
+									new LatLng(myLocation.getLatitude(), myLocation.getLongitude()))
+									.title("Me!" + iteration));
+							currentUser.put("location", myParseGP);
+							currentUser.saveInBackground(new SaveCallback(){
 										public void done(ParseException e){
 											Log.d("Dashboard", "location saved");
 										}
-									});
-								}
-							});		
+									});	
 							//Retrieving other locations
 							ParseQuery queryLoc = ParseUser.getQuery();
 							queryLoc.whereExists("location");
-							queryLoc.whereWithinMiles("location", myParseGP, 1.0);
+							queryLoc.whereWithinMiles("location", myParseGP, 1);
 							queryLoc.whereNotEqualTo("username", currentUser.getUsername());
 							queryLoc.findInBackground(new FindCallback(){
 								public void done(List<ParseObject> object, ParseException e){
@@ -144,33 +112,8 @@ class UpdateLocationTimerTask extends TimerTask {
 										}
 									}
 								}
-							});	
-							
-//							ParseQuery queryOtherLoc = new ParseQuery("Locations");
-//							queryOtherLoc.whereWithinKilometers("location", myParseGP, .01);
-//							queryOtherLoc.whereNotEqualTo("username", currentUser);
-//							queryOtherLoc.findInBackground(new FindCallback(){
-//								public void done(List<ParseObject> object, ParseException e){
-//									for(Marker obj : otherLocationMarker){
-//										obj.remove();
-//									}
-//									otherLocationMarker.clear();
-//									if (object != null && object.size() > 0){
-//										for (ParseObject obj : object){
-//											otherLocationMarker.add(
-//													googleMap.addMarker(new MarkerOptions()
-//											.position(new LatLng(obj.getParseGeoPoint("location").getLatitude(),
-//													obj.getParseGeoPoint("location").getLongitude()))
-//											.title("??" + obj.get("username").toString())
-//											.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))));
-//										}
-//									}
-//								}
-//							});							
+							});							
 						}
-
-
-
 					}});
 			}}).start();
 	}
@@ -209,15 +152,14 @@ public class Dashboard extends FragmentActivity {
 			finish();
 		} else {	
 			PushService.setDefaultPushCallback(this, Dashboard.class);
-//			PushService.subscribe(this, currentUser.getUsername(), Dashboard.class);
 			
 			ParseInstallation installation = ParseInstallation.getCurrentInstallation();
-			installation.put("owner",currentUser);
-			installation.put("email", currentUser.getUsername());
+			installation.put("username",currentUser.getUsername());
 			installation.saveInBackground();
 			ParseAnalytics.trackAppOpened(getIntent());
-			
+//			PushService.subscribe(getApplicationContext(), currentUser.getUsername(), Dashboard.class);
 			setUpMapIfNeeded();
+			
 			gpsTracker = new GPSTracker(this);
 			if(!gpsTracker.canGetLocation()){
 				AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(Dashboard.this);
@@ -234,6 +176,7 @@ public class Dashboard extends FragmentActivity {
 			Timer timer = new Timer();
 			TimerTask updateLocation = new UpdateLocationTimerTask(Dashboard.this, gpsTracker, googleMap, currentUser);
 			timer.scheduleAtFixedRate(updateLocation, 0, UPDATE_LOCATION_PERIOD);
+			
 
 			inventory = new ArrayList<String>();
 			scoreButton = (Button) findViewById(R.id.scoreButton);
@@ -432,6 +375,9 @@ public class Dashboard extends FragmentActivity {
 		//      	.position(new LatLng(42.36036686, -71.08679982))
 		//	     	.title("Wohoo!"));
 		//  	}
-		googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(42.35848655, -71.09211361), 21.0f));
+//		ParseGeoPoint point = (ParseGeoPoint) currentUser.get("location");
+//		double lat = point.getLatitude();
+//		double long_ = point.getLongitude();
+		googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(42.36036686, -71.08679982), 21.0f));
 	}
 }

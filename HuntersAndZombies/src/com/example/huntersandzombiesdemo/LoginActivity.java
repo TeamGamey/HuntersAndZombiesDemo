@@ -1,19 +1,11 @@
 package com.example.huntersandzombiesdemo;
 
 
-import com.parse.LogInCallback;
-import com.parse.Parse;
-import com.parse.ParseAnalytics;
-import com.parse.ParseException;
-import com.parse.ParseUser;
-import com.parse.SignUpCallback;
-
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -24,6 +16,13 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.parse.LogInCallback;
+import com.parse.Parse;
+import com.parse.ParseAnalytics;
+import com.parse.ParseException;
+import com.parse.ParseUser;
+import com.parse.SignUpCallback;
 
 /**
  * Activity which displays a login screen to the user, offering registration as
@@ -136,11 +135,12 @@ public class LoginActivity extends Activity {
 			mEmailView.setError(getString(R.string.error_field_required));
 			focusView = mEmailView;
 			cancel = true;
-		} else if (!mEmail.contains("@")) {
-			mEmailView.setError(getString(R.string.error_invalid_email));
-			focusView = mEmailView;
-			cancel = true;
 		}
+//		} else if (!mEmail.contains("@")) {
+//			mEmailView.setError(getString(R.string.error_invalid_email));
+//			focusView = mEmailView;
+//			cancel = true;
+//		}
 
 		if (cancel) {
 			// There was an error; don't attempt login and focus the first
@@ -151,9 +151,12 @@ public class LoginActivity extends Activity {
 			showProgress(true);
 			ParseUser.logInInBackground(mEmail, mPassword, new LogInCallback() {
         		public void done(ParseUser user, ParseException e) {
-        			if (user != null) {
+        			if (user != null && e == null) {
         	        	startActivity(new Intent(getApplicationContext(), Dashboard.class));
+        			} else if (user == null || e != null){
+        				showProgress(false);
         			}
+        			
 //        			} else {
 //        				startActivity(new Intent(getApplicationContext(), QUserActivity.class));
 //        			}
@@ -191,11 +194,12 @@ public class LoginActivity extends Activity {
 			mEmailView.setError(getString(R.string.error_field_required));
 			focusView = mEmailView;
 			cancel = true;
-		} else if (!mEmail.contains("@")) {
-			mEmailView.setError(getString(R.string.error_invalid_email));
-			focusView = mEmailView;
-			cancel = true;
 		}
+//		} else if (!mEmail.contains("@")) {
+//			mEmailView.setError(getString(R.string.error_invalid_email));
+//			focusView = mEmailView;
+//			cancel = true;
+//		}
 
 		if (cancel) {
 			// There was an error; don't attempt login and focus the first
@@ -207,14 +211,22 @@ public class LoginActivity extends Activity {
 			final ParseUser user = new ParseUser();
 	        user.setUsername(mEmail);
 	        user.setPassword(mPassword);
-	        user.setEmail(mEmail);
+//	        user.setEmail(mEmail);
+			if (Math.random() < .5){
+				user.put("Zombie", 1);
+			}
+			else{
+				user.put("Zombie",2);
+			}
 	        
 			user.signUpInBackground(new SignUpCallback() {
 				public void done(ParseException e) {
 				    if (e == null) {
+//				    	startActivity(new Intent(getApplicationContext(), Dashboard.class));
 //				    	Log.d(TAG, "creating user account");
 				    } else {
-//				    	Log.d(TAG, e.toString());
+//				    	showProgress(false);
+				    	Log.d("error", e.toString());
 				    }
 				}
 			});

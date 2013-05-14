@@ -28,10 +28,11 @@
         android:required="true" />
     <!-- End of copy. -->
     <!-- Push notification settings -->
-	<uses-permission android:name="android.permission.INTERNET" />
-	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-	<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-	<uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
@@ -81,14 +82,20 @@
             android:name="com.example.huntersandzombiesdemo.SignUpActivity"
             android:label="@string/title_activity_sign_up" >
         </activity>
+
         <service android:name="com.parse.PushService" />
-		<receiver android:name="com.parse.ParseBroadcastReceiver">
-		  <intent-filter>
-		    <action android:name="android.intent.action.BOOT_COMPLETED" />
-		    <action android:name="android.intent.action.USER_PRESENT" />
-		  </intent-filter>
-		</receiver>
-        
+
+        <receiver android:name="com.parse.ParseBroadcastReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.USER_PRESENT" />
+            </intent-filter>
+        </receiver>
+
+        <activity
+            android:name="com.example.huntersandzombiesdemo.AcceptDuel"
+            android:label="@string/title_activity_accept_duel" >
+        </activity>
     </application>
 
 </manifest>

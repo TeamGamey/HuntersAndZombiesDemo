@@ -2,6 +2,9 @@ package com.example.huntersandzombiesdemo;
 
 import java.util.ArrayList;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -53,34 +56,31 @@ public class DuelUserActivity extends Activity {
 //				intent.putExtra(DUEL_USERNAME, users.get(v.getId()));
 //				startActivity(intent); 
 //				Thread.sleep(1000);
-//				ParseQuery pushQuery = ParseInstallation.getQuery();
-//				pushQuery.whereEqualTo("username", duelUsername);
-//				
-//				ParsePush push = new ParsePush();
-//				push.setQuery(pushQuery);
-//				push.setMessage(currentUser.getUsername()+" has challenged you to a duel!");
-//				push.sendInBackground();
-//				 
-//				
-//				// Find user with duel username
-//				ParseQuery userQuery = ParseInstallation.getQuery();
-//				userQuery.whereEqualTo("username", duelUsername);
-				 
-				// Find devices associated with user
-				ParseQuery pushQuery = ParseInstallation.getQuery();
-				pushQuery.whereEqualTo("username", duelUsername);
-				 
-				// Send push notification to query
-				ParsePush push = new ParsePush();
-				push.setQuery(pushQuery); // Set our Installation query
-				push.setMessage(currentUser.getUsername()+" has challenged you to a duel!");
-				push.sendInBackground();
 				
+				JSONObject data;
+				try {
+					data = new JSONObject("{\"alert\": \""+currentUser.getUsername()+" has challenged you to a duel!\","+
+							"\"user\": \""+currentUser.getUsername()+"\""+
+							"\"weapon\": \"wooden sword\"}");
+					ParseQuery pushQuery = ParseInstallation.getQuery();
+					pushQuery.whereEqualTo("username", duelUsername);
+					ParsePush push = new ParsePush();
+					push.setQuery(pushQuery);
+					push.setData(data);
+					push.sendInBackground();
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+//				push.setMessage(currentUser.getUsername()+" has challenged you to a duel!");
+				
+//				
 				AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
 						DuelUserActivity.this);
-				alertDialogBuilder.setTitle("Congratulations!");
-				alertDialogBuilder.setMessage("You have won a duel against "+duelUsername+"!\nYou have won 20 coins.");
-				money+=20;
+				alertDialogBuilder.setTitle("Duel Sent to "+duelUsername);
+				alertDialogBuilder.setMessage("You have initiated a duel against "+duelUsername+"!\nNow it is their turn to fight back");
+				//money+=20;
 				alertDialogBuilder.setNeutralButton("Close",new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
